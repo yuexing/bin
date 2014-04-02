@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if [ "x$1" = "x" ]; then
+    echo "Usage: $0 <command> [args|opts]"
+    exit 2
+fi
+
+while true; do
+    echo "$@"
+    "$@" || exit
+done

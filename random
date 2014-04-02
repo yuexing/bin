@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+import sys
+from optparse import OptionParser
+from random import randint
+
+parser = OptionParser()
+parser.add_option("--max", help="[Required] the maximum number", type="int")
+parser.add_option("--min", help="[Required] the minimal number", type="int")
+parser.add_option("--sum", help="[Optional] the value these numbers should be summed to", 
+        type="int")
+parser.add_option("-l", "--limit", help="[Required] how many numbers are expected", type="int")
+
+(options, args) = parser.parse_args()
+
+if (options.limit is None) or (options.min is None) or (options.max is None):
+    parser.print_help()
+    sys.exit(2)
+
+require_sum, sum = (False, 0) if options.sum is None else (True, options.sum)
+
+if options.max * options.limit < options.sum:
+    print "Impossible to generate such a sequence for which max * limit < sum"
+    sys.exit(2)
+
+sum1 = 0
+
+try:
+    for x in range(options.limit):
+        if require_sum:
+            min_ = max(options.min, sum - sum1 - (options.limit - x - 1) * options.max)
+            max_ = min(options.max, sum - sum1 - (options.limit - x - 1) * options.min)
+            val = randint(min_, max_)
+            sum1 += val
+            print val,
+        else:
+            print randint(options.min, options.max),
+except ValueError as e:
+    print "Value error(%d): %s" % (e.errno, e.strerror)
