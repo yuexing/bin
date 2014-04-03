@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+function usage() {
+cat << EOF
+    Usage $0 [-ht] <old> <new>. 
+    -t            The file extension, used as '*.ext'
+    -h            Show usage
+    -u            Reverse the previous change '*.tmp' is required
+    -c            Clean the '*.tmp'
+    use man re_format to see modern regular expression.
+EOF
+}
+
+function replace() {
+    if [ ! $# -eq 2 ]; then
+        usage >&2
+        exit 1
+    fi
+
+    for file in $(find . -name *.$ext); do
+        echo "processing...$file"
+        sed -E -i ".tmp" -e"s;$1;$2;g"  $file
+    done
+}
+
+function clear() {
+    for file in $(find . -name *.$ext); do
+        echo "processing...$file"
+        rm -f "$file.tmp"
+    done
+}
+
+function revert() {
+    for file in $(find . -name *.$ext); do
+        echo "processing...$file"
+        mv "$file.tmp" $file
+    done
+}
+
+OPTIND=1
+ext=""
+fclean=0
+frevert=0
+while getopts "ht:cr" opt; do
+    case "$opt" in
+        t)
+            ext=$OPTARG
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+        c)
+            $fclean=1
+            ;;
+        r) 
+            $frevert=1
+            ;;
+        '?')
+            usage >&2
+            exit 1
+            ;;
+    esac
+done
+shift "$((OPTIND-1))"
+
+if [ $frevert -eq 1 ]; then
+    revert;
+    exit 0;
+fi
+
+if [ $fclean -eq 1 ]; then
+    clean;
+    exit 0;
+fi
+
+replace "$@"

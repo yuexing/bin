@@ -1,3 +1,10 @@
+## m
+
+memwatch
+```
+    watch a child process's memory usage
+```
+
 ## f
 
 forever: run a command and never stop even when it fails
@@ -14,4 +21,9 @@ random:
 
 ```
         generate random numbers using options --limit --min --max --sum
+```
+
+replace:
+```
+        apply sed to replace <old> to <new> in files.
 ```
