@@ -23,7 +23,11 @@ hex2dec
 ```
     reverse the functionality of dec2hex.
 ```
-
+## k
+kill-command
+```
+    kill command with keywords.
+```
 
 ## m
 

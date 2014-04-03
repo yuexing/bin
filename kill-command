@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "" ]; then
+    echo "Usage $0 <the keyword contained into th process to be killed>"
+    exit 1
+fi
+
+pid=`ps|grep $1|grep -v grep|grep -v $0|awk '{print $1}'`
+echo $pid
+
+if [ "$pid" = "" ]; then
+    echo "grep $1 gets nothing"
+    exit 1
+fi
+
+kill -9 $pid
