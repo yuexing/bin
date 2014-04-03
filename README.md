@@ -1,15 +1,30 @@
+## d
+
+dec2hex
+```
+    read from files or stdin if no file is specified, in which
+    each line should be a decimal number. Output the number in
+    hexadecimal format.
+```
+## f
+
+forever: run a command and never stop even when it fails
+
+foreverif: run a command until it fails
+
+## h
+
+hex2dec
+```
+    reverse the functionality of dec2hex.
+```
+
 ## m
 
 memwatch
 ```
     watch a child process's memory usage
 ```
-
-## f
-
-forever: run a command and never stop even when it fails
-
-foreverif: run a command until it fails
 
 ## o
 
