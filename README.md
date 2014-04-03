@@ -14,10 +14,16 @@ foreverif: run a command until it fails
 
 ## h
 
+hexdump
+```
+    dump the content of the file in hex mode
+```
+
 hex2dec
 ```
     reverse the functionality of dec2hex.
 ```
+
 
 ## m
 

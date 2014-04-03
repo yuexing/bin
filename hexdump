@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "" ]; then
+    if [ -t 0 ]; then
+        echo "Usage: $0 <file to dump>"
+        echo "dumps (non-tty) stdin without filename."
+        exit 1
+    else
+        filename='-'
+    fi
+else
+    filename="$1"
+fi
+
+# the format:
+# contains any number of format units, separated by whitespace.
+# A format unit contains up to three items: an iteration count, a byte count, and a format.
+# "%06.6_ax  " means show the offset in hex with 6 digits, then 3 spaces
+# 16/1         means 16 chars per line
+# "%02X "      means 2-digit hex output separated by spaces.
+# " "          means 3 spaces separating hex and ascii outputs
+#"%_p"         means ascii output with '.' for binary, no spaces
+fmt=/tmp/$USER.hexdump.format
+cat>$fmt<<EOF
+"%06.6_ax  " 16/1 "%02X "
+"  " "%_p"
+"\n"
+EOF
+
+if [ "$filename" = "-" ]; then
+    hexdump -f $fmt
+else
+    hexdump -f $fmt "$filename"
+fi
