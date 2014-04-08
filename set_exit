@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+function exitstatus()
+{
+    EXITSTATUS="$?"
+    if [ EXITSTATUS -ne 0 ]; then
+        echo 'Exit $EXITSTATUS'
+    fi
+}
+
+PROMPT_COMMAND=exitstatus

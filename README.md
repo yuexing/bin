@@ -52,3 +52,12 @@ replace:
 ```
         apply sed to replace <old> to <new> in files.
 ```
+## set
+```
+Useful when setting up environment
+```
+
+set_exit
+```
+print out the exit code when it does not finish successfully (0).
+```
