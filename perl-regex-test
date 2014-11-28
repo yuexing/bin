@@ -1,0 +1,16 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+my $pattern=shift(@ARGV);
+
+print "Using pattern: $pattern \n";
+
+while( <> ) {
+    chomp;
+    if(/$pattern/) {
+        print "Matched: |$`<$&>$'| \n";
+    } else {
+        print "No: |$_| \n";
+    }
+}
