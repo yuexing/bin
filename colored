@@ -1,0 +1,58 @@
+#!/usr/bin/python
+
+'''
+read from stdin and color the output
+'''
+import sys
+import fileinput
+import re
+
+#colors:
+#30      set black foreground
+#31      set red foreground
+#32      set green foreground
+#33      set brown foreground
+#34      set blue foreground
+#35      set magenta foreground
+#36      set cyan foreground
+#37      set white foreground
+
+
+#mode
+#0      normal
+#1      bold
+#4      underscore
+#5      blink
+
+def_modes=[0,1,4,5];
+def_colors=range(1,7);
+color_end="\033[0m"
+
+colors={};
+
+def colorline(line):
+  for key in colors:
+    line = re.sub(key, colors[key], line);
+  return line;
+
+(mode_idx, color_idx) = (0,0)
+for arg in sys.argv[1:]:
+
+  if(color_idx == len(def_colors)):
+    (mode_idx, color_idx) = (mode_idx+1, 0);
+
+  if(mode_idx == len(def_modes)):
+    mode_idx = 0;
+
+  re_arg = re.compile(arg);
+  colors[re_arg] = "\033[%d;%dm%s%s" % (def_modes[mode_idx], 30+def_colors[color_idx], arg, color_end)  
+  print "%s: %s" % (arg, colors[re_arg])
+
+  color_idx += 1;
+
+while True:
+  line = sys.stdin.readline()
+  if not line:
+    break;
+  line = line.rstrip()
+  print colorline(line);
